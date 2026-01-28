@@ -1,10 +1,18 @@
-
-import { GoogleGenAI, Type } from "@google/genai";
 import { AssessmentResult } from "../types";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
+let ai: any = null;
+
+const getAI = async () => {
+  if (!ai) {
+    const { GoogleGenAI } = await import("@google/genai");
+    ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
+  }
+  return ai;
+};
 
 export const generateHealthPlan = async (answers: Record<string, string>): Promise<AssessmentResult> => {
+  const { Type } = await import("@google/genai");
+  const aiClient = await getAI();
   const prompt = `
     As a clinical longevity expert, analyze the following user assessment data and provide a "Sleep Vitality Score" and a detailed action plan.
     User Data: ${JSON.stringify(answers)}
@@ -19,7 +27,7 @@ export const generateHealthPlan = async (answers: Record<string, string>): Promi
     6. Ensure the tone is analytical, scientific, and trustworthy.
   `;
 
-  const response = await ai.models.generateContent({
+  const response = await aiClient.models.generateContent({
     model: 'gemini-3-flash-preview',
     contents: prompt,
     config: {
