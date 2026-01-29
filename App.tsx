@@ -35,37 +35,41 @@ const App: React.FC = () => {
       case 'tools':
         return <Tools onOpenAssessment={handleOpenAssessment} />;
       case 'discovery':
-        return <Discovery onOpenAssessment={handleOpenAssessment} />;
+        return <Discovery onOpenAssessment={handleOpenAssessment} onNavigate={setCurrentPage} />;
       case 'sleep':
         return (
-          <CategoryPage 
-            category="Sleep" 
-            description="Optimize the foundation of longevity. Temperature regulation, light hygiene, and restorative depth analysis." 
+          <CategoryPage
+            category="Sleep"
+            description="Optimize the foundation of longevity. Temperature regulation, light hygiene, and restorative depth analysis."
             onOpenAssessment={handleOpenAssessment}
+            onNavigate={setCurrentPage}
           />
         );
       case 'labs':
         return (
-          <CategoryPage 
-            category="Labs" 
-            description="Bio-marker identification and tracking. From standard panels to cutting-edge epigenetic age testing." 
+          <CategoryPage
+            category="Labs"
+            description="Bio-marker identification and tracking. From standard panels to cutting-edge epigenetic age testing."
             onOpenAssessment={handleOpenAssessment}
+            onNavigate={setCurrentPage}
           />
         );
       case 'wearables':
         return (
-          <CategoryPage 
-            category="Wearables" 
-            description="Continuous biometric feedback loops. HRV, glucose, and recovery tracking technologies." 
+          <CategoryPage
+            category="Wearables"
+            description="Continuous biometric feedback loops. HRV, glucose, and recovery tracking technologies."
             onOpenAssessment={handleOpenAssessment}
+            onNavigate={setCurrentPage}
           />
         );
       case 'gear':
         return (
-          <CategoryPage 
-            category="Gear" 
-            description="The hardware stack for human optimization. From red light panels to specialized performance tools." 
+          <CategoryPage
+            category="Gear"
+            description="The hardware stack for human optimization. From red light panels to specialized performance tools."
             onOpenAssessment={handleOpenAssessment}
+            onNavigate={setCurrentPage}
           />
         );
       case 'about':

@@ -5,20 +5,21 @@ import ToolCard from '../components/ToolCard';
 
 interface DiscoveryProps {
   onOpenAssessment: () => void;
+  onNavigate: (page: string) => void;
 }
 
-const Discovery: React.FC<DiscoveryProps> = ({ onOpenAssessment }) => {
+const Discovery: React.FC<DiscoveryProps> = ({ onOpenAssessment, onNavigate }) => {
   const categories = [
-    { name: 'Sleep', icon: 'bedtime' },
-    { name: 'Labs', icon: 'science' },
-    { name: 'Metabolic', icon: 'insights' },
-    { name: 'Wearables', icon: 'watch' },
-    { name: 'Recovery', icon: 'auto_fix_high' },
-    { name: 'Heat', icon: 'thermostat' },
-    { name: 'Cold', icon: 'ac_unit' },
-    { name: 'Light', icon: 'light_mode' },
-    { name: 'Home', icon: 'home' },
-    { name: 'Supplements', icon: 'pill' },
+    { name: 'Sleep', icon: 'bedtime', slug: 'sleep' },
+    { name: 'Labs', icon: 'science', slug: 'labs' },
+    { name: 'Metabolic', icon: 'insights', slug: 'discovery' },
+    { name: 'Wearables', icon: 'watch', slug: 'wearables' },
+    { name: 'Recovery', icon: 'auto_fix_high', slug: 'discovery' },
+    { name: 'Heat', icon: 'thermostat', slug: 'discovery' },
+    { name: 'Cold', icon: 'ac_unit', slug: 'discovery' },
+    { name: 'Light', icon: 'light_mode', slug: 'discovery' },
+    { name: 'Home', icon: 'home', slug: 'discovery' },
+    { name: 'Supplements', icon: 'pill', slug: 'discovery' },
   ];
 
   const goals = ['Sleep deeper', 'Improve energy', 'Metabolic health', 'Recover faster', 'Better air/water'];
@@ -103,10 +104,17 @@ const Discovery: React.FC<DiscoveryProps> = ({ onOpenAssessment }) => {
         <h2 className="serif-heading text-3xl font-bold text-[#1e293b] mb-10">Shop by Category</h2>
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
           {categories.map((cat) => (
-            <div key={cat.name} className="bg-white border border-slate-100 p-8 rounded-2xl flex flex-col gap-4 hover:shadow-md hover:border-primary transition-all cursor-pointer group">
+            <button
+              key={cat.name}
+              onClick={() => {
+                onNavigate(cat.slug);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className="bg-white border border-slate-100 p-8 rounded-2xl flex flex-col gap-4 hover:shadow-md hover:border-primary transition-all cursor-pointer group text-left"
+            >
               <span className="material-symbols-outlined text-[#359EFF] text-3xl group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">{cat.icon}</span>
               <span className="text-sm font-bold text-[#1e293b]">{cat.name}</span>
-            </div>
+            </button>
           ))}
         </div>
       </section>
