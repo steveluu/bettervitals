@@ -81,7 +81,7 @@ const App: React.FC = () => {
             onNavigate={setCurrentPage}
           />
         );
-      case 'home':
+      case 'home-environment':
         return (
           <CategoryPage
             category="Home"
@@ -144,7 +144,7 @@ const App: React.FC = () => {
                 { icon: 'insights', label: 'Metabolic', slug: 'metabolic' },
                 { icon: 'watch', label: 'Wearables', slug: 'wearables' },
                 { icon: 'spa', label: 'Recovery', slug: 'recovery' },
-                { icon: 'home', label: 'Home', slug: 'home' },
+                { icon: 'home', label: 'Home', slug: 'home-environment' },
                 { icon: 'pill', label: 'Supplements', slug: 'supplements' },
               ].map((cat, idx) => (
                 <button 

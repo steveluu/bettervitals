@@ -15,7 +15,7 @@ const Discovery: React.FC<DiscoveryProps> = ({ onOpenAssessment, onNavigate }) =
     { name: 'Metabolic', icon: 'insights', slug: 'metabolic' },
     { name: 'Wearables', icon: 'watch', slug: 'wearables' },
     { name: 'Recovery & Therapy', icon: 'spa', slug: 'recovery' },
-    { name: 'Home', icon: 'home', slug: 'home' },
+    { name: 'Home', icon: 'home', slug: 'home-environment' },
     { name: 'Supplements', icon: 'pill', slug: 'supplements' },
   ];
 

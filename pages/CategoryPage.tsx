@@ -28,7 +28,7 @@ const relatedCategories: Record<string, Array<{ name: string; slug: string; icon
     { name: 'Wearables', slug: 'wearables', icon: 'watch' },
     { name: 'Recovery & Therapy', slug: 'recovery', icon: 'spa' },
     { name: 'Supplements', slug: 'supplements', icon: 'pill' },
-    { name: 'Home', slug: 'home', icon: 'home' },
+    { name: 'Home', slug: 'home-environment', icon: 'home' },
   ],
   Wearables: [
     { name: 'Sleep', slug: 'sleep', icon: 'bedtime' },
@@ -52,7 +52,7 @@ const relatedCategories: Record<string, Array<{ name: string; slug: string; icon
     { name: 'Sleep', slug: 'sleep', icon: 'bedtime' },
     { name: 'Wearables', slug: 'wearables', icon: 'watch' },
     { name: 'Supplements', slug: 'supplements', icon: 'pill' },
-    { name: 'Home', slug: 'home', icon: 'home' },
+    { name: 'Home', slug: 'home-environment', icon: 'home' },
   ],
   Home: [
     { name: 'Sleep', slug: 'sleep', icon: 'bedtime' },

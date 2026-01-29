@@ -17,7 +17,7 @@ const MegaMenu: React.FC<MegaMenuProps> = ({ isOpen, onClose, onNavigate, onStar
     { name: 'Metabolic', icon: 'insights', slug: 'metabolic' },
     { name: 'Wearables & Health Tech', icon: 'watch', slug: 'wearables' },
     { name: 'Recovery & Therapy', icon: 'spa', slug: 'recovery' },
-    { name: 'Home Environment', icon: 'home', slug: 'home' },
+    { name: 'Home Environment', icon: 'home', slug: 'home-environment' },
     { name: 'Supplements & Nutrition', icon: 'pill', slug: 'supplements' },
   ];
 
