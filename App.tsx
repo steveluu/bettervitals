@@ -63,21 +63,58 @@ const App: React.FC = () => {
             onNavigate={setCurrentPage}
           />
         );
-      case 'gear':
+      case 'metabolic':
         return (
           <CategoryPage
-            category="Gear"
-            description="The hardware stack for human optimization. From red light panels to specialized performance tools."
+            category="Metabolic"
+            description="CGMs, glucose monitors, and metabolic optimization tools for metabolic health insights."
+            onOpenAssessment={handleOpenAssessment}
+            onNavigate={setCurrentPage}
+          />
+        );
+      case 'recovery':
+        return (
+          <CategoryPage
+            category="Recovery & Therapy"
+            description="Thermal therapies, light therapy, and recovery tools for optimal restoration and performance."
+            onOpenAssessment={handleOpenAssessment}
+            onNavigate={setCurrentPage}
+          />
+        );
+      case 'home':
+        return (
+          <CategoryPage
+            category="Home"
+            description="Air quality, water filtration, and environmental optimization for your living space."
+            onOpenAssessment={handleOpenAssessment}
+            onNavigate={setCurrentPage}
+          />
+        );
+      case 'supplements':
+        return (
+          <CategoryPage
+            category="Supplements"
+            description="Evidence-based supplementation protocols for longevity and performance."
             onOpenAssessment={handleOpenAssessment}
             onNavigate={setCurrentPage}
           />
         );
       case 'about':
         return <About />;
+      case 'gear':
+        // Redirect old gear route to recovery
+        return (
+          <CategoryPage
+            category="Recovery & Therapy"
+            description="Thermal therapies, light therapy, and recovery tools for optimal restoration and performance."
+            onOpenAssessment={handleOpenAssessment}
+            onNavigate={setCurrentPage}
+          />
+        );
       default:
         return (
-          <Home 
-            onGetPicks={handleGetPicks} 
+          <Home
+            onGetPicks={handleGetPicks}
             onBrowseCategories={() => setCurrentPage('discovery')}
             onOpenAssessment={handleOpenAssessment}
           />
@@ -100,18 +137,15 @@ const App: React.FC = () => {
         {currentPage === 'home' && (
           <section className="mt-24 mb-24">
             <h2 className="text-xs font-black tracking-[0.3em] uppercase text-center text-[#359EFF] mb-8">System Hierarchy</h2>
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-px bg-slate-200 overflow-hidden rounded-sm shadow-sm border border-slate-200">
+            <div className="grid grid-cols-2 md:grid-cols-7 gap-px bg-slate-200 overflow-hidden rounded-sm shadow-sm border border-slate-200">
               {[
-                { icon: 'hotel', label: 'Sleep', slug: 'sleep' },
+                { icon: 'bedtime', label: 'Sleep', slug: 'sleep' },
                 { icon: 'science', label: 'Labs', slug: 'labs' },
-                { icon: 'ecg_heart', label: 'Metabolic', slug: 'discovery' },
+                { icon: 'insights', label: 'Metabolic', slug: 'metabolic' },
                 { icon: 'watch', label: 'Wearables', slug: 'wearables' },
-                { icon: 'spa', label: 'Recovery', slug: 'discovery' },
-                { icon: 'fitness_center', label: 'Performance', slug: 'discovery' },
-                { icon: 'water_drop', label: 'Hydration', slug: 'discovery' },
-                { icon: 'restaurant', label: 'Supplements', slug: 'discovery' },
-                { icon: 'lightbulb', label: 'Red Light', slug: 'discovery' },
-                { icon: 'more_horiz', label: 'Other', slug: 'discovery' },
+                { icon: 'spa', label: 'Recovery', slug: 'recovery' },
+                { icon: 'home', label: 'Home', slug: 'home' },
+                { icon: 'pill', label: 'Supplements', slug: 'supplements' },
               ].map((cat, idx) => (
                 <button 
                   key={idx} 

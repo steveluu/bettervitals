@@ -13,7 +13,12 @@ export const getCategoryColor = (category: string): string => {
     case 'Wearables':
       return 'bg-emerald-50 text-emerald-600 border-emerald-100';
     case 'Recovery':
+    case 'Recovery & Therapy':
       return 'bg-rose-50 text-rose-600 border-rose-100';
+    case 'Home':
+      return 'bg-teal-50 text-teal-600 border-teal-100';
+    case 'Supplements':
+      return 'bg-amber-50 text-amber-600 border-amber-100';
     default:
       return 'bg-slate-50 text-slate-600 border-slate-100';
   }
@@ -33,7 +38,12 @@ export const getCategoryColorDark = (category: string): string => {
     case 'Wearables':
       return 'bg-emerald-100 text-emerald-700';
     case 'Recovery':
+    case 'Recovery & Therapy':
       return 'bg-rose-100 text-rose-700';
+    case 'Home':
+      return 'bg-teal-100 text-teal-700';
+    case 'Supplements':
+      return 'bg-amber-100 text-amber-700';
     default:
       return 'bg-slate-100 text-slate-700';
   }

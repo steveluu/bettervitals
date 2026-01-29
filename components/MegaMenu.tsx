@@ -14,14 +14,11 @@ const MegaMenu: React.FC<MegaMenuProps> = ({ isOpen, onClose, onNavigate, onStar
   const categories = [
     { name: 'Sleep', icon: 'bedtime', slug: 'sleep' },
     { name: 'Labs & Testing', icon: 'science', slug: 'labs' },
-    { name: 'Metabolic', icon: 'insights', slug: 'discovery' },
+    { name: 'Metabolic', icon: 'insights', slug: 'metabolic' },
     { name: 'Wearables & Health Tech', icon: 'watch', slug: 'wearables' },
-    { name: 'Recovery', icon: 'auto_fix_high', slug: 'discovery' },
-    { name: 'Heat Therapy (Saunas)', icon: 'thermostat', slug: 'discovery' },
-    { name: 'Cold Therapy (Plunges)', icon: 'ac_unit', slug: 'discovery' },
-    { name: 'Light Therapy', icon: 'light_mode', slug: 'discovery' },
-    { name: 'Home Environment', icon: 'home', slug: 'discovery' },
-    { name: 'Supplements & Nutrition', icon: 'pill', slug: 'discovery' },
+    { name: 'Recovery & Therapy', icon: 'spa', slug: 'recovery' },
+    { name: 'Home Environment', icon: 'home', slug: 'home' },
+    { name: 'Supplements & Nutrition', icon: 'pill', slug: 'supplements' },
   ];
 
   const goals = [

@@ -16,34 +16,55 @@ const categoryImages: Record<string, string> = {
   Sleep: 'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&q=80&w=1000',
   Wearables: 'https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?auto=format&fit=crop&q=80&w=1000',
   Labs: 'https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&q=80&w=1000',
-  Gear: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&q=80&w=1000',
+  Metabolic: 'https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&q=80&w=1000',
+  'Recovery & Therapy': 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&q=80&w=1000',
+  Home: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&q=80&w=1000',
+  Supplements: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=1000',
 };
 
 // Related categories mapping
 const relatedCategories: Record<string, Array<{ name: string; slug: string; icon: string }>> = {
   Sleep: [
     { name: 'Wearables', slug: 'wearables', icon: 'watch' },
-    { name: 'Recovery', slug: 'discovery', icon: 'auto_fix_high' },
-    { name: 'Light', slug: 'discovery', icon: 'light_mode' },
-    { name: 'Supplements', slug: 'discovery', icon: 'pill' },
+    { name: 'Recovery & Therapy', slug: 'recovery', icon: 'spa' },
+    { name: 'Supplements', slug: 'supplements', icon: 'pill' },
+    { name: 'Home', slug: 'home', icon: 'home' },
   ],
   Wearables: [
     { name: 'Sleep', slug: 'sleep', icon: 'bedtime' },
     { name: 'Labs', slug: 'labs', icon: 'science' },
-    { name: 'Recovery', slug: 'discovery', icon: 'auto_fix_high' },
-    { name: 'Metabolic', slug: 'discovery', icon: 'insights' },
+    { name: 'Metabolic', slug: 'metabolic', icon: 'insights' },
+    { name: 'Recovery & Therapy', slug: 'recovery', icon: 'spa' },
   ],
   Labs: [
     { name: 'Wearables', slug: 'wearables', icon: 'watch' },
-    { name: 'Metabolic', slug: 'discovery', icon: 'insights' },
-    { name: 'Supplements', slug: 'discovery', icon: 'pill' },
+    { name: 'Metabolic', slug: 'metabolic', icon: 'insights' },
+    { name: 'Supplements', slug: 'supplements', icon: 'pill' },
     { name: 'Sleep', slug: 'sleep', icon: 'bedtime' },
   ],
-  Gear: [
-    { name: 'Recovery', slug: 'discovery', icon: 'auto_fix_high' },
-    { name: 'Light', slug: 'discovery', icon: 'light_mode' },
-    { name: 'Cold', slug: 'discovery', icon: 'ac_unit' },
-    { name: 'Heat', slug: 'discovery', icon: 'thermostat' },
+  Metabolic: [
+    { name: 'Labs', slug: 'labs', icon: 'science' },
+    { name: 'Wearables', slug: 'wearables', icon: 'watch' },
+    { name: 'Supplements', slug: 'supplements', icon: 'pill' },
+    { name: 'Sleep', slug: 'sleep', icon: 'bedtime' },
+  ],
+  'Recovery & Therapy': [
+    { name: 'Sleep', slug: 'sleep', icon: 'bedtime' },
+    { name: 'Wearables', slug: 'wearables', icon: 'watch' },
+    { name: 'Supplements', slug: 'supplements', icon: 'pill' },
+    { name: 'Home', slug: 'home', icon: 'home' },
+  ],
+  Home: [
+    { name: 'Sleep', slug: 'sleep', icon: 'bedtime' },
+    { name: 'Recovery & Therapy', slug: 'recovery', icon: 'spa' },
+    { name: 'Supplements', slug: 'supplements', icon: 'pill' },
+    { name: 'Labs', slug: 'labs', icon: 'science' },
+  ],
+  Supplements: [
+    { name: 'Labs', slug: 'labs', icon: 'science' },
+    { name: 'Metabolic', slug: 'metabolic', icon: 'insights' },
+    { name: 'Sleep', slug: 'sleep', icon: 'bedtime' },
+    { name: 'Recovery & Therapy', slug: 'recovery', icon: 'spa' },
   ],
 };
 
@@ -52,7 +73,10 @@ const categoryHeadlines: Record<string, { main: string; accent: string }> = {
   Sleep: { main: 'Master Your', accent: 'Sleep' },
   Wearables: { main: 'Track Your', accent: 'Vitals' },
   Labs: { main: 'Know Your', accent: 'Numbers' },
-  Gear: { main: 'Optimize Your', accent: 'Stack' },
+  Metabolic: { main: 'Optimize Your', accent: 'Metabolism' },
+  'Recovery & Therapy': { main: 'Restore &', accent: 'Recover' },
+  Home: { main: 'Optimize Your', accent: 'Environment' },
+  Supplements: { main: 'Fuel Your', accent: 'Longevity' },
 };
 
 const CategoryPage: React.FC<CategoryPageProps> = ({ category, description, onOpenAssessment, onNavigate }) => {

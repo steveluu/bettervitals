@@ -12,14 +12,11 @@ const Discovery: React.FC<DiscoveryProps> = ({ onOpenAssessment, onNavigate }) =
   const categories = [
     { name: 'Sleep', icon: 'bedtime', slug: 'sleep' },
     { name: 'Labs', icon: 'science', slug: 'labs' },
-    { name: 'Metabolic', icon: 'insights', slug: 'discovery' },
+    { name: 'Metabolic', icon: 'insights', slug: 'metabolic' },
     { name: 'Wearables', icon: 'watch', slug: 'wearables' },
-    { name: 'Recovery', icon: 'auto_fix_high', slug: 'discovery' },
-    { name: 'Heat', icon: 'thermostat', slug: 'discovery' },
-    { name: 'Cold', icon: 'ac_unit', slug: 'discovery' },
-    { name: 'Light', icon: 'light_mode', slug: 'discovery' },
-    { name: 'Home', icon: 'home', slug: 'discovery' },
-    { name: 'Supplements', icon: 'pill', slug: 'discovery' },
+    { name: 'Recovery & Therapy', icon: 'spa', slug: 'recovery' },
+    { name: 'Home', icon: 'home', slug: 'home' },
+    { name: 'Supplements', icon: 'pill', slug: 'supplements' },
   ];
 
   const goals = ['Sleep deeper', 'Improve energy', 'Metabolic health', 'Recover faster', 'Better air/water'];
