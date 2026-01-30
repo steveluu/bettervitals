@@ -7,7 +7,7 @@ import { FEATURED_TOOLS, VERIFIED_SELECTIONS } from '../constants';
 interface CategoryPageProps {
   category: string;
   description: string;
-  onOpenAssessment: () => void;
+  onOpenAssessment: (toolId?: string) => void;
   onNavigate: (page: string) => void;
 }
 
@@ -79,12 +79,38 @@ const categoryHeadlines: Record<string, { main: string; accent: string }> = {
   Supplements: { main: 'Fuel Your', accent: 'Longevity' },
 };
 
+// Category intro content for SEO
+const categoryIntros: Record<string, string> = {
+  Metabolic: `Metabolic health tracking helps you understand how your body processes food and maintains energy throughout the day. Continuous glucose monitors (CGMs) have revolutionized this space by providing real-time insights into your blood sugar responses—data that was previously only available to diabetics through prescription devices.
+
+Modern metabolic wearables like CGMs can reveal your personal glucose patterns, showing how different foods, exercise timing, and sleep quality affect your metabolic stability. This personalized data helps you make informed dietary choices based on your individual biology rather than generic nutrition guidelines. Whether you're optimizing for sustained energy, weight management, or long-term metabolic health, these tools provide actionable feedback to guide your decisions.`,
+  Sleep: `Quality sleep is the foundation of health optimization. Modern sleep technology has evolved far beyond simple alarm clocks, offering sophisticated tools that track, analyze, and actively improve your rest. From temperature-regulating mattresses to non-invasive sleep trackers, these devices help you understand and optimize every phase of your sleep cycle.
+
+The best sleep tools combine accurate biometric tracking with actionable insights. Whether you're a hot sleeper struggling with night sweats, someone seeking to improve HRV and recovery, or simply want to understand your sleep patterns better, there's now a science-backed solution for every sleep challenge.`,
+  Labs: `Regular biomarker testing has become a cornerstone of proactive health management. Modern at-home and clinical lab services offer unprecedented access to detailed blood work, genetic testing, and biological age analysis—empowering you to track your health metrics over time and catch potential issues early.
+
+From comprehensive metabolic panels to cutting-edge epigenetic age tests, today's lab services provide actionable insights that were once available only through expensive clinical visits. Many services now include AI-powered analysis and personalized recommendations based on your unique biomarker profile.`,
+  Wearables: `Health wearables have transformed from simple step counters into sophisticated biometric sensors. Today's devices track heart rate variability (HRV), sleep stages, blood oxygen, skin temperature, and more—providing continuous insight into your body's recovery and readiness.
+
+The key to choosing the right wearable is understanding what metrics matter most for your goals. Athletes may prioritize strain and recovery tracking, while those focused on longevity might value HRV accuracy and sleep analysis. We've tested and compared the leading options to help you find the perfect fit.`,
+  'Recovery & Therapy': `Recovery optimization has emerged as a critical component of any health protocol. From percussion therapy devices to red light panels, cold plunges to compression systems, modern recovery tools help accelerate muscle repair, reduce inflammation, and enhance overall resilience.
+
+The science behind these modalities continues to strengthen, with research supporting benefits ranging from improved circulation and reduced muscle soreness to enhanced mitochondrial function and mood regulation. The right recovery stack can significantly improve your training capacity and quality of life.`,
+  Home: `Your home environment significantly impacts your health—from the air you breathe to the water you drink and the light that affects your circadian rhythm. Optimizing these environmental factors can improve sleep quality, reduce toxin exposure, and support your body's natural recovery processes.
+
+Modern home health technology includes medical-grade air purifiers, advanced water filtration systems, and blue light blocking solutions that help align your environment with your biology. These tools represent some of the highest-ROI investments in your health optimization journey.`,
+  Supplements: `The supplement landscape can be overwhelming, with thousands of products making bold claims. We focus on supplements with meaningful clinical evidence, transparent sourcing, and third-party testing to ensure you're getting products that actually deliver results.
+
+From foundational multivitamins to cutting-edge longevity compounds like NMN and NAD+ precursors, we evaluate supplements based on bioavailability, dosing, and real-world efficacy. Our recommendations prioritize products trusted by physicians and validated by independent testing organizations.`,
+};
+
 const CategoryPage: React.FC<CategoryPageProps> = ({ category, description, onOpenAssessment, onNavigate }) => {
   const tools = FEATURED_TOOLS.filter(t => t.category.toLowerCase() === category.toLowerCase());
   const products = VERIFIED_SELECTIONS.filter(p => p.category.toLowerCase() === category.toLowerCase());
   const heroImage = categoryImages[category] || categoryImages.Sleep;
   const related = relatedCategories[category] || relatedCategories.Sleep;
   const headline = categoryHeadlines[category] || { main: 'Explore', accent: category };
+  const categoryIntro = categoryIntros[category];
 
   return (
     <div className="animate-in fade-in slide-in-from-right-4 duration-500 pb-20">
@@ -136,6 +162,24 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ category, description, onOp
         </div>
       </section>
 
+      {/* Category Introduction */}
+      {categoryIntro && (
+        <section className="mb-16">
+          <div className="bg-white border border-slate-100 rounded-2xl p-8 md:p-10">
+            <h2 className="text-xs font-black uppercase tracking-[0.2em] text-primary mb-4">
+              About {category}
+            </h2>
+            <div className="prose prose-slate max-w-none">
+              {categoryIntro.split('\n\n').map((paragraph, idx) => (
+                <p key={idx} className="text-slate-600 text-sm leading-relaxed mb-4 last:mb-0">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Assessment CTA Banner */}
       <section className="mb-16 p-8 rounded-2xl bg-gradient-to-r from-scientific-blue to-primary/90 text-white shadow-lg">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
@@ -184,7 +228,7 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ category, description, onOp
             </button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {products.map(product => <ProductCard key={product.id} product={product} />)}
+            {products.map(product => <ProductCard key={product.id} product={product} onNavigate={onNavigate} />)}
           </div>
         </section>
       )}

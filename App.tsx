@@ -3,14 +3,21 @@ import React, { useState } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import AssessmentModal from './components/AssessmentModal';
+import HotSleeperAssessmentModal from './components/HotSleeperAssessmentModal';
+import CGMWorthinessModal from './components/CGMWorthinessModal';
 import Home from './pages/Home';
 import Tools from './pages/Tools';
 import Discovery from './pages/Discovery';
 import CategoryPage from './pages/CategoryPage';
+import ProductDetailPage from './pages/ProductDetailPage';
 import About from './pages/About';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
+import Compliance from './pages/Compliance';
+import { VERIFIED_SELECTIONS } from './constants';
 
 const App: React.FC = () => {
-  const [isAssessmentOpen, setIsAssessmentOpen] = useState(false);
+  const [activeAssessmentTool, setActiveAssessmentTool] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState('home');
 
   const handleGetPicks = () => {
@@ -18,18 +25,25 @@ const App: React.FC = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleOpenAssessment = () => {
-    setIsAssessmentOpen(true);
+  const handleOpenAssessment = (toolId?: string) => {
+    if (toolId === 'hot-sleeper') {
+      setActiveAssessmentTool('hot-sleeper');
+    } else if (toolId === 'cgm-worthiness') {
+      setActiveAssessmentTool('cgm-worthiness');
+    } else {
+      setActiveAssessmentTool('generic');
+    }
   };
 
   const renderPage = () => {
     switch (currentPage) {
       case 'home':
         return (
-          <Home 
-            onGetPicks={handleGetPicks} 
+          <Home
+            onGetPicks={handleGetPicks}
             onBrowseCategories={() => setCurrentPage('discovery')}
             onOpenAssessment={handleOpenAssessment}
+            onNavigate={setCurrentPage}
           />
         );
       case 'tools':
@@ -101,6 +115,12 @@ const App: React.FC = () => {
         );
       case 'about':
         return <About />;
+      case 'privacy':
+        return <PrivacyPolicy />;
+      case 'terms':
+        return <TermsOfService />;
+      case 'compliance':
+        return <Compliance />;
       case 'gear':
         // Redirect old gear route to recovery
         return (
@@ -112,11 +132,20 @@ const App: React.FC = () => {
           />
         );
       default:
+        // Handle product detail pages
+        if (currentPage.startsWith('product/')) {
+          const slug = currentPage.replace('product/', '');
+          const product = VERIFIED_SELECTIONS.find(p => p.slug === slug);
+          if (product) {
+            return <ProductDetailPage product={product} onNavigate={setCurrentPage} />;
+          }
+        }
         return (
           <Home
             onGetPicks={handleGetPicks}
             onBrowseCategories={() => setCurrentPage('discovery')}
             onOpenAssessment={handleOpenAssessment}
+            onNavigate={setCurrentPage}
           />
         );
     }
@@ -164,12 +193,28 @@ const App: React.FC = () => {
         )}
       </main>
 
-      <Footer />
+      <Footer onNavigate={setCurrentPage} />
 
-      <AssessmentModal 
-        isOpen={isAssessmentOpen} 
-        onClose={() => setIsAssessmentOpen(false)} 
-      />
+      {activeAssessmentTool === 'hot-sleeper' && (
+        <HotSleeperAssessmentModal
+          isOpen={true}
+          onClose={() => setActiveAssessmentTool(null)}
+          onNavigate={setCurrentPage}
+        />
+      )}
+      {activeAssessmentTool === 'cgm-worthiness' && (
+        <CGMWorthinessModal
+          isOpen={true}
+          onClose={() => setActiveAssessmentTool(null)}
+          onNavigate={setCurrentPage}
+        />
+      )}
+      {activeAssessmentTool === 'generic' && (
+        <AssessmentModal
+          isOpen={true}
+          onClose={() => setActiveAssessmentTool(null)}
+        />
+      )}
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { AssessmentResult } from "../types";
+import { AssessmentResult, HotSleeperAnswers } from "../types";
 
 let ai: any = null;
 
@@ -61,6 +61,79 @@ export const generateHealthPlan = async (answers: Record<string, string>): Promi
     return JSON.parse(response.text);
   } catch (error) {
     console.error('Failed to parse API response:', error);
+    throw new Error('Invalid response format from AI service');
+  }
+};
+
+export interface HotSleeperAIResult {
+  summary: string;
+  actionPlan: { title: string; description: string; icon: string; }[];
+}
+
+export const generateHotSleeperPlan = async (
+  answers: HotSleeperAnswers,
+  score: number,
+  severity: string
+): Promise<HotSleeperAIResult> => {
+  const { Type } = await import("@google/genai");
+  const aiClient = await getAI();
+
+  const prompt = `
+    As a sleep optimization expert specializing in thermal regulation, analyze this Hot Sleeper assessment data and provide personalized recommendations.
+
+    User Profile:
+    - Hot Sleeper Score: ${score}/100 (${severity})
+    - Heat Frequency: ${answers.heatFrequency}
+    - Bedroom Temperature: ${answers.roomTemperature}
+    - Partner Preferences: ${answers.partnerPreferences}
+    - Current Bedding: ${answers.beddingType}
+    - Current Solutions: ${answers.currentSolutions}
+    - Budget: ${answers.budget}
+
+    Context about cooling products we recommend:
+    - Eight Sleep Pod 4 ($2,695): Best for severe hot sleepers - active water cooling, dual-zone, tracks sleep
+    - Eight Sleep Pod 5 ($3,295): Latest tech, enhanced AI algorithms
+    - ChiliPad Cube ($699): Budget-friendly water-based cooling, works with any mattress
+    - Sleep Number Climate Cool ($2,299): Mainstream option with ceramic gel cooling
+
+    Generate:
+    1. A 2-3 sentence scientific summary explaining their thermal sleep profile and why they're experiencing heat issues
+    2. A 3-step action plan with specific, actionable recommendations tailored to their score and budget
+
+    The tone should be analytical, scientific, and trustworthy. Focus on sleep science and temperature regulation.
+  `;
+
+  const response = await aiClient.models.generateContent({
+    model: 'gemini-3-flash-preview',
+    contents: prompt,
+    config: {
+      responseMimeType: "application/json",
+      responseSchema: {
+        type: Type.OBJECT,
+        properties: {
+          summary: { type: Type.STRING },
+          actionPlan: {
+            type: Type.ARRAY,
+            items: {
+              type: Type.OBJECT,
+              properties: {
+                title: { type: Type.STRING },
+                description: { type: Type.STRING },
+                icon: { type: Type.STRING }
+              },
+              required: ['title', 'description', 'icon']
+            }
+          }
+        },
+        required: ['summary', 'actionPlan']
+      }
+    }
+  });
+
+  try {
+    return JSON.parse(response.text);
+  } catch (error) {
+    console.error('Failed to parse Hot Sleeper API response:', error);
     throw new Error('Invalid response format from AI service');
   }
 };

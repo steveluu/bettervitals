@@ -4,7 +4,7 @@ import ToolCard from '../components/ToolCard';
 import { getCategoryColorDark } from '../utils/categoryColors';
 
 interface ToolsProps {
-  onOpenAssessment: () => void;
+  onOpenAssessment: (toolId?: string) => void;
 }
 
 const Tools: React.FC<ToolsProps> = ({ onOpenAssessment }) => {
@@ -54,8 +54,8 @@ const Tools: React.FC<ToolsProps> = ({ onOpenAssessment }) => {
               </div>
 
               <div className="flex items-center gap-8">
-                <button 
-                  onClick={onOpenAssessment}
+                <button
+                  onClick={() => onOpenAssessment(featured.id)}
                   className="bg-[#0a192f] text-white px-8 py-4 rounded-lg text-[13px] font-black uppercase tracking-tight flex items-center gap-2 hover:bg-[#1e293b] transition-all shadow-md active:scale-95"
                 >
                   START ASSESSMENT <span className="material-symbols-outlined text-base">arrow_forward</span>

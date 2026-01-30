@@ -4,13 +4,19 @@ import { getCategoryColor } from '../utils/categoryColors';
 
 interface ToolCardProps {
   tool: DiagnosticTool;
-  onClick?: () => void;
+  onClick?: (toolId?: string) => void;
 }
 
 const ToolCard: React.FC<ToolCardProps> = ({ tool, onClick }) => {
+  const handleClick = () => {
+    if (onClick) {
+      onClick(tool.id);
+    }
+  };
+
   return (
-    <div 
-      onClick={onClick}
+    <div
+      onClick={handleClick}
       className="group cursor-pointer bg-white dark:bg-slate-900 p-6 rounded-sm border border-slate-200 dark:border-slate-800 hover:border-primary transition-all hover:shadow-xl flex flex-col h-full"
     >
       <div className="flex justify-between items-start mb-4">

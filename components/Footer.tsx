@@ -1,7 +1,15 @@
 
 import React from 'react';
 
-const Footer: React.FC = () => {
+interface FooterProps {
+  onNavigate: (page: string) => void;
+}
+
+const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
+  const handleNavigate = (page: string) => {
+    onNavigate(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
   return (
     <footer className="bg-[#f8fafc] text-slate-900 py-24 border-t border-slate-100">
       <div className="max-w-[1200px] mx-auto px-6">
@@ -50,9 +58,9 @@ const Footer: React.FC = () => {
           <div className="md:col-span-2">
             <h4 className="font-black text-[13px] tracking-tight text-[#1e293b] mb-8">Legal</h4>
             <ul className="space-y-4 text-[13px] font-medium text-[#64748b]">
-              <li><a className="hover:text-[#00E5FF] transition-colors" href="#">Privacy</a></li>
-              <li><a className="hover:text-[#00E5FF] transition-colors" href="#">Terms</a></li>
-              <li><a className="hover:text-[#00E5FF] transition-colors" href="#">Compliance</a></li>
+              <li><button className="hover:text-[#00E5FF] transition-colors" onClick={() => handleNavigate('privacy')}>Privacy</button></li>
+              <li><button className="hover:text-[#00E5FF] transition-colors" onClick={() => handleNavigate('terms')}>Terms</button></li>
+              <li><button className="hover:text-[#00E5FF] transition-colors" onClick={() => handleNavigate('compliance')}>Compliance</button></li>
             </ul>
           </div>
         </div>

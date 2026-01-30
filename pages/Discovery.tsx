@@ -4,7 +4,7 @@ import { FEATURED_TOOLS, VERIFIED_SELECTIONS } from '../constants';
 import ToolCard from '../components/ToolCard';
 
 interface DiscoveryProps {
-  onOpenAssessment: () => void;
+  onOpenAssessment: (toolId?: string) => void;
   onNavigate: (page: string) => void;
 }
 
@@ -171,7 +171,7 @@ const Discovery: React.FC<DiscoveryProps> = ({ onOpenAssessment, onNavigate }) =
                   <button className="w-full bg-[#359EFF] text-white py-4 rounded-xl text-xs font-black uppercase tracking-widest hover:brightness-110 transition-all active:scale-95 shadow-md">
                     See Review
                   </button>
-                  <p className="text-[8px] text-center text-slate-300 mt-4 font-bold uppercase tracking-widest">May earn commission</p>
+                  <p className="text-[10px] text-center text-slate-400 mt-4 font-bold uppercase tracking-widest">May earn commission</p>
                 </div>
               </div>
             ))}

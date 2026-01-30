@@ -1,12 +1,21 @@
 
 import React from 'react';
 import { Product } from '../types';
+import EvidenceBadge from './EvidenceBadge';
 
 interface ProductCardProps {
   product: Product;
+  onNavigate?: (page: string) => void;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product, onNavigate }) => {
+  const handleViewReview = () => {
+    if (onNavigate) {
+      onNavigate(`product/${product.slug}`);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-sm overflow-hidden flex flex-col hover:border-primary transition-all group">
       <div className="h-44 bg-slate-50 dark:bg-slate-800 relative p-4 flex items-center justify-center grayscale group-hover:grayscale-0 transition-all duration-500">
@@ -21,6 +30,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           <span className="text-[9px] font-bold text-slate-400">{product.priceLevel}</span>
         </div>
         <p className="text-[10px] text-slate-400 mb-3 italic">{product.description}</p>
+
+        {/* Evidence Badge */}
+        {product.evidence && (
+          <div className="mb-3">
+            <EvidenceBadge evidence={product.evidence} />
+          </div>
+        )}
+
         <div className="space-y-1.5 mb-4 border-t border-slate-50 dark:border-slate-800 pt-3">
           {product.pros.map((pro, idx) => (
             <div key={idx} className="flex gap-2 text-[10px] items-start">
@@ -35,7 +52,32 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             </div>
           ))}
         </div>
-        <button className="w-full mt-auto bg-slate-900 text-white dark:bg-slate-800 py-2 rounded-sm text-[10px] font-black uppercase tracking-widest hover:bg-primary hover:text-scientific-blue transition-all">Analyze Price</button>
+
+        {/* Primary CTA: View Full Review (internal link) */}
+        {onNavigate && product.slug ? (
+          <button
+            onClick={handleViewReview}
+            className="w-full mt-auto bg-slate-900 text-white dark:bg-slate-800 py-2 rounded-sm text-[10px] font-black uppercase tracking-widest hover:bg-primary hover:text-scientific-blue transition-all text-center"
+          >
+            View Full Review
+          </button>
+        ) : product.affiliateUrl ? (
+          <a
+            href={product.affiliateUrl}
+            target="_blank"
+            rel="noopener noreferrer sponsored"
+            className="w-full mt-auto bg-slate-900 text-white dark:bg-slate-800 py-2 rounded-sm text-[10px] font-black uppercase tracking-widest hover:bg-primary hover:text-scientific-blue transition-all text-center block"
+          >
+            View Best Price
+          </a>
+        ) : (
+          <button
+            className="w-full mt-auto bg-slate-200 text-slate-400 dark:bg-slate-700 dark:text-slate-500 py-2 rounded-sm text-[10px] font-black uppercase tracking-widest cursor-not-allowed"
+            disabled
+          >
+            Coming Soon
+          </button>
+        )}
       </div>
     </div>
   );

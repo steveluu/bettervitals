@@ -7,10 +7,11 @@ import { FEATURED_TOOLS, VERIFIED_SELECTIONS, SYSTEM_ANALYSIS } from '../constan
 interface HomeProps {
   onGetPicks: () => void;
   onBrowseCategories: () => void;
-  onOpenAssessment: () => void;
+  onOpenAssessment: (toolId?: string) => void;
+  onNavigate?: (page: string) => void;
 }
 
-const Home: React.FC<HomeProps> = ({ onGetPicks, onBrowseCategories, onOpenAssessment }) => {
+const Home: React.FC<HomeProps> = ({ onGetPicks, onBrowseCategories, onOpenAssessment, onNavigate }) => {
   return (
     <div className="animate-in fade-in duration-500">
       {/* Hero Section */}
@@ -103,7 +104,7 @@ const Home: React.FC<HomeProps> = ({ onGetPicks, onBrowseCategories, onOpenAsses
         <h2 className="text-xs font-black tracking-[0.3em] uppercase text-primary mb-8">Verified Selections</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {VERIFIED_SELECTIONS.map(product => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard key={product.id} product={product} onNavigate={onNavigate} />
           ))}
         </div>
       </section>
