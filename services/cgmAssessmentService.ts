@@ -142,92 +142,18 @@ export const generateCGMAssessment = async (
   label: string,
   primaryProduct: string
 ): Promise<CGMAIResult> => {
-  const { Type } = await import('@google/genai');
-  const { GoogleGenAI } = await import('@google/genai');
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
-
   const product = getProductById(primaryProduct);
   const productName = product?.name || primaryProduct;
 
-  const prompt = `
-    As a metabolic health expert, analyze this CGM Worthiness Quiz assessment and provide personalized recommendations.
-
-    WRITING STYLE RULES (follow strictly):
-    - No "testament to", "underscores", "highlights", "showcases"
-    - No "Not only X, but Y" constructions
-    - No em dashes for dramatic effect
-    - Use "is" and "are" instead of "serves as" or "stands as"
-    - Be specific, not vague ("eat fewer carbs at dinner" not "optimize your nutrition")
-    - Skip the cheerleading ("this could help" not "this exciting opportunity")
-    - No generic positive conclusions
-    - Write like you're texting a friend who asked for advice
-
-    User Profile:
-    - Worthiness Score: ${score}/100 (${label})
-    - Primary Goal: ${answers.primaryGoal}
-    - Risk Factors: ${answers.riskFactors.join(', ') || 'None'}
-    - Diet Approach: ${answers.dietApproach}
-    - Data Style Preference: ${answers.dataStyle}
-    - Wearable Comfort Level: ${answers.wearableComfort}
-    - Budget: ${answers.budget}
-    - Timeline/Commitment: ${answers.timeline}
-
-    Top Recommended Product: ${productName}
-
-    Context about CGM products we recommend:
-    - Levels Health ($199/mo): Best for self-directed biohackers and athletes who want detailed glucose insights
-    - Nutrisense ($225/mo): Best for those wanting 1:1 dietitian coaching and support
-    - Dexcom Stelo ($99/mo): Best for clinical accuracy seekers, FDA-cleared, no prescription needed
-    - Signos ($199/mo): Best for weight loss focused users with RD support
-    - Abbott Lingo ($49/mo): Best budget entry option with simplified "Lingo count" metric
-    - Lumen ($349 one-time): Non-invasive breath analysis alternative for those uncomfortable with sensors
-
-    ${score < 55 ? 'Note: This user scored lower on CGM worthiness. While still recommending products, emphasize that they may get less value from CGM tracking and suggest starting with entry-level options or alternatives.' : ''}
-
-    Generate:
-    1. A 2-3 sentence verdict explaining why CGM tracking ${score >= 55 ? 'would benefit them' : 'may be optional for them'} based on their specific profile
-    2. A 3-step action plan with specific, actionable recommendations tailored to their goals and timeline
-    3. Three specific reasons why ${productName} fits their needs (whyItFits array)
-
-    The tone should be analytical, scientific, and trustworthy. Focus on metabolic health and personalized recommendations.
-    Use these Material Symbols icon names for actionPlan icons: glucose, restaurant, schedule, fitness_center, analytics, science, tips_and_updates
-  `;
-
-  const response = await ai.models.generateContent({
-    model: 'gemini-3-flash-preview',
-    contents: prompt,
-    config: {
-      responseMimeType: 'application/json',
-      responseSchema: {
-        type: Type.OBJECT,
-        properties: {
-          verdict: { type: Type.STRING },
-          actionPlan: {
-            type: Type.ARRAY,
-            items: {
-              type: Type.OBJECT,
-              properties: {
-                title: { type: Type.STRING },
-                description: { type: Type.STRING },
-                icon: { type: Type.STRING }
-              },
-              required: ['title', 'description', 'icon']
-            }
-          },
-          whyItFits: {
-            type: Type.ARRAY,
-            items: { type: Type.STRING }
-          }
-        },
-        required: ['verdict', 'actionPlan', 'whyItFits']
-      }
-    }
+  const response = await fetch('/api/cgm-assessment', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ answers, score, label, primaryProduct, productName })
   });
 
-  try {
-    return JSON.parse(response.text);
-  } catch (error) {
-    console.error('Failed to parse CGM Assessment API response:', error);
-    throw new Error('Invalid response format from AI service');
+  if (!response.ok) {
+    throw new Error('Failed to generate CGM assessment');
   }
+
+  return response.json();
 };

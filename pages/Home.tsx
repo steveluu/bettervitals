@@ -8,7 +8,7 @@ interface HomeProps {
   onGetPicks: () => void;
   onBrowseCategories: () => void;
   onOpenAssessment: (toolId?: string) => void;
-  onNavigate?: (page: string) => void;
+  onNavigate: (page: string) => void;
 }
 
 const Home: React.FC<HomeProps> = ({ onGetPicks, onBrowseCategories, onOpenAssessment, onNavigate }) => {

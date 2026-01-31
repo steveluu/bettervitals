@@ -31,27 +31,27 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           <div className="md:col-span-2">
             <h4 className="font-black text-[13px] tracking-tight text-[#1e293b] mb-8">Tools</h4>
             <ul className="space-y-4 text-[13px] font-medium text-[#64748b]">
-              <li><a className="hover:text-[#00E5FF] transition-colors" href="#">Longevity</a></li>
-              <li><a className="hover:text-[#00E5FF] transition-colors" href="#">Sleep Health</a></li>
-              <li><a className="hover:text-[#00E5FF] transition-colors" href="#">Biohacking</a></li>
+              <li><button className="hover:text-[#00E5FF] transition-colors" onClick={() => handleNavigate('tools')}>Longevity</button></li>
+              <li><button className="hover:text-[#00E5FF] transition-colors" onClick={() => handleNavigate('tools')}>Sleep Health</button></li>
+              <li><button className="hover:text-[#00E5FF] transition-colors" onClick={() => handleNavigate('tools')}>Biohacking</button></li>
             </ul>
           </div>
 
           <div className="md:col-span-2">
             <h4 className="font-black text-[13px] tracking-tight text-[#1e293b] mb-8">Methodology</h4>
             <ul className="space-y-4 text-[13px] font-medium text-[#64748b]">
-              <li><a className="hover:text-[#00E5FF] transition-colors" href="#">Clinical Review</a></li>
-              <li><a className="hover:text-[#00E5FF] transition-colors" href="#">Data Standards</a></li>
-              <li><a className="hover:text-[#00E5FF] transition-colors" href="#">Editorial Team</a></li>
+              <li><button className="hover:text-[#00E5FF] transition-colors" onClick={() => handleNavigate('about')}>Clinical Review</button></li>
+              <li><button className="hover:text-[#00E5FF] transition-colors" onClick={() => handleNavigate('about')}>Data Standards</button></li>
+              <li><button className="hover:text-[#00E5FF] transition-colors" onClick={() => handleNavigate('about')}>Editorial Team</button></li>
             </ul>
           </div>
 
           <div className="md:col-span-2">
             <h4 className="font-black text-[13px] tracking-tight text-[#1e293b] mb-8">Company</h4>
             <ul className="space-y-4 text-[13px] font-medium text-[#64748b]">
-              <li><a className="hover:text-[#00E5FF] transition-colors" href="#">About</a></li>
-              <li><a className="hover:text-[#00E5FF] transition-colors" href="#">Careers</a></li>
-              <li><a className="hover:text-[#00E5FF] transition-colors" href="#">Contact</a></li>
+              <li><button className="hover:text-[#00E5FF] transition-colors" onClick={() => handleNavigate('about')}>About</button></li>
+              <li><button className="hover:text-[#00E5FF] transition-colors" onClick={() => handleNavigate('about')}>Careers</button></li>
+              <li><button className="hover:text-[#00E5FF] transition-colors" onClick={() => handleNavigate('about')}>Contact</button></li>
             </ul>
           </div>
 

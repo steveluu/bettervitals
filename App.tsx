@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import AssessmentModal from './components/AssessmentModal';
@@ -14,14 +14,13 @@ import About from './pages/About';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
 import Compliance from './pages/Compliance';
-import { VERIFIED_SELECTIONS } from './constants';
 
 const App: React.FC = () => {
   const [activeAssessmentTool, setActiveAssessmentTool] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState('home');
 
   const handleGetPicks = () => {
-    setCurrentPage('tools');
+    navigateTo('tools');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -35,132 +34,116 @@ const App: React.FC = () => {
     }
   };
 
-  const renderPage = () => {
-    switch (currentPage) {
-      case 'home':
-        return (
-          <Home
-            onGetPicks={handleGetPicks}
-            onBrowseCategories={() => setCurrentPage('discovery')}
-            onOpenAssessment={handleOpenAssessment}
-            onNavigate={setCurrentPage}
-          />
-        );
-      case 'tools':
-        return <Tools onOpenAssessment={handleOpenAssessment} />;
-      case 'discovery':
-        return <Discovery onOpenAssessment={handleOpenAssessment} onNavigate={setCurrentPage} />;
-      case 'sleep':
-        return (
-          <CategoryPage
-            category="Sleep"
-            description="Optimize the foundation of longevity. Temperature regulation, light hygiene, and restorative depth analysis."
-            onOpenAssessment={handleOpenAssessment}
-            onNavigate={setCurrentPage}
-          />
-        );
-      case 'labs':
-        return (
-          <CategoryPage
-            category="Labs"
-            description="Bio-marker identification and tracking. From standard panels to cutting-edge epigenetic age testing."
-            onOpenAssessment={handleOpenAssessment}
-            onNavigate={setCurrentPage}
-          />
-        );
-      case 'wearables':
-        return (
-          <CategoryPage
-            category="Wearables"
-            description="Continuous biometric feedback loops. HRV, glucose, and recovery tracking technologies."
-            onOpenAssessment={handleOpenAssessment}
-            onNavigate={setCurrentPage}
-          />
-        );
-      case 'metabolic':
-        return (
-          <CategoryPage
-            category="Metabolic"
-            description="CGMs, glucose monitors, and metabolic optimization tools for metabolic health insights."
-            onOpenAssessment={handleOpenAssessment}
-            onNavigate={setCurrentPage}
-          />
-        );
-      case 'recovery':
-        return (
-          <CategoryPage
-            category="Recovery & Therapy"
-            description="Thermal therapies, light therapy, and recovery tools for optimal restoration and performance."
-            onOpenAssessment={handleOpenAssessment}
-            onNavigate={setCurrentPage}
-          />
-        );
-      case 'home-environment':
-        return (
-          <CategoryPage
-            category="Home"
-            description="Air quality, water filtration, and environmental optimization for your living space."
-            onOpenAssessment={handleOpenAssessment}
-            onNavigate={setCurrentPage}
-          />
-        );
-      case 'supplements':
-        return (
-          <CategoryPage
-            category="Supplements"
-            description="Evidence-based supplementation protocols for longevity and performance."
-            onOpenAssessment={handleOpenAssessment}
-            onNavigate={setCurrentPage}
-          />
-        );
-      case 'about':
-        return <About />;
-      case 'privacy':
-        return <PrivacyPolicy />;
-      case 'terms':
-        return <TermsOfService />;
-      case 'compliance':
-        return <Compliance />;
-      case 'gear':
-        // Redirect old gear route to recovery
-        return (
-          <CategoryPage
-            category="Recovery & Therapy"
-            description="Thermal therapies, light therapy, and recovery tools for optimal restoration and performance."
-            onOpenAssessment={handleOpenAssessment}
-            onNavigate={setCurrentPage}
-          />
-        );
-      default:
-        // Handle product detail pages
-        if (currentPage.startsWith('product/')) {
-          const slug = currentPage.replace('product/', '');
-          const product = VERIFIED_SELECTIONS.find(p => p.slug === slug);
-          if (product) {
-            return <ProductDetailPage product={product} onNavigate={setCurrentPage} />;
-          }
-        }
-        return (
-          <Home
-            onGetPicks={handleGetPicks}
-            onBrowseCategories={() => setCurrentPage('discovery')}
-            onOpenAssessment={handleOpenAssessment}
-            onNavigate={setCurrentPage}
-          />
-        );
+  const categories = {
+    sleep: {
+      category: 'Sleep',
+      description: 'Optimize the foundation of longevity. Temperature regulation, light hygiene, and restorative depth analysis.'
+    },
+    labs: {
+      category: 'Labs',
+      description: 'Bio-marker identification and tracking. From standard panels to cutting-edge epigenetic age testing.'
+    },
+    wearables: {
+      category: 'Wearables',
+      description: 'Continuous biometric feedback loops. HRV, glucose, and recovery tracking technologies.'
+    },
+    metabolic: {
+      category: 'Metabolic',
+      description: 'CGMs, glucose monitors, and metabolic optimization tools for metabolic health insights.'
+    },
+    recovery: {
+      category: 'Recovery & Therapy',
+      description: 'Thermal therapies, light therapy, and recovery tools for optimal restoration and performance.'
+    },
+    'home-environment': {
+      category: 'Home',
+      description: 'Air quality, water filtration, and environmental optimization for your living space.'
+    },
+    supplements: {
+      category: 'Supplements',
+      description: 'Evidence-based supplementation protocols for longevity and performance.'
     }
   };
 
+  const validRoutes = new Set([
+    'home',
+    'tools',
+    'discovery',
+    'about',
+    'privacy',
+    'terms',
+    'compliance',
+    ...Object.keys(categories)
+  ]);
+
+  const getPageFromPath = (pathname: string) => {
+    if (pathname === '/' || pathname === '') return 'home';
+    if (pathname.startsWith('/product/')) return `product/${pathname.replace('/product/', '')}`;
+    const route = pathname.replace('/', '');
+    if (route === 'gear') return 'recovery';
+    if (validRoutes.has(route)) return route;
+    return 'home';
+  };
+
+  const getPathFromPage = (page: string) => {
+    if (page === 'home') return '/';
+    if (page.startsWith('product/')) return `/${page}`;
+    return `/${page}`;
+  };
+
+  const navigateTo = (page: string) => {
+    setCurrentPage(page);
+    const path = getPathFromPage(page);
+    window.history.pushState({}, '', path);
+  };
+
+  useEffect(() => {
+    const handlePopState = () => {
+      setCurrentPage(getPageFromPath(window.location.pathname));
+    };
+    const initialPage = getPageFromPath(window.location.pathname);
+    setCurrentPage(initialPage);
+    const normalizedPath = getPathFromPage(initialPage);
+    if (window.location.pathname !== normalizedPath) {
+      window.history.replaceState({}, '', normalizedPath);
+    }
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
   return (
     <div className="min-h-screen flex flex-col bg-white">
-      <Navbar 
-        onStartAssessment={handleGetPicks} 
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-      />
+      <Navbar onStartAssessment={handleGetPicks} currentPage={currentPage} onNavigate={navigateTo} />
 
       <main className="max-w-[1200px] mx-auto px-6 py-12 flex-1 w-full">
-        {renderPage()}
+        {currentPage === 'home' && (
+          <Home
+            onGetPicks={handleGetPicks}
+            onBrowseCategories={() => {
+              navigateTo('discovery');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            onOpenAssessment={handleOpenAssessment}
+            onNavigate={navigateTo}
+          />
+        )}
+        {currentPage === 'tools' && <Tools onOpenAssessment={handleOpenAssessment} />}
+        {currentPage === 'discovery' && <Discovery onOpenAssessment={handleOpenAssessment} onNavigate={navigateTo} />}
+        {categories[currentPage as keyof typeof categories] && (
+          <CategoryPage
+            category={categories[currentPage as keyof typeof categories].category}
+            description={categories[currentPage as keyof typeof categories].description}
+            onOpenAssessment={handleOpenAssessment}
+            onNavigate={navigateTo}
+          />
+        )}
+        {currentPage.startsWith('product/') && (
+          <ProductDetailPage onNavigate={navigateTo} slug={currentPage.replace('product/', '')} />
+        )}
+        {currentPage === 'about' && <About />}
+        {currentPage === 'privacy' && <PrivacyPolicy onNavigate={navigateTo} />}
+        {currentPage === 'terms' && <TermsOfService onNavigate={navigateTo} />}
+        {currentPage === 'compliance' && <Compliance onNavigate={navigateTo} />}
 
         {/* System Hierarchy Grid - Contextual Navigation */}
         {currentPage === 'home' && (
@@ -179,7 +162,7 @@ const App: React.FC = () => {
                 <button 
                   key={idx} 
                   onClick={() => {
-                    setCurrentPage(cat.slug);
+                    navigateTo(cat.slug);
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
                   className="flex flex-col items-center p-8 bg-white hover:bg-slate-50 transition-all text-center cursor-pointer group"
@@ -193,20 +176,20 @@ const App: React.FC = () => {
         )}
       </main>
 
-      <Footer onNavigate={setCurrentPage} />
+      <Footer onNavigate={navigateTo} />
 
       {activeAssessmentTool === 'hot-sleeper' && (
         <HotSleeperAssessmentModal
           isOpen={true}
           onClose={() => setActiveAssessmentTool(null)}
-          onNavigate={setCurrentPage}
+          onNavigate={navigateTo}
         />
       )}
       {activeAssessmentTool === 'cgm-worthiness' && (
         <CGMWorthinessModal
           isOpen={true}
           onClose={() => setActiveAssessmentTool(null)}
-          onNavigate={setCurrentPage}
+          onNavigate={navigateTo}
         />
       )}
       {activeAssessmentTool === 'generic' && (

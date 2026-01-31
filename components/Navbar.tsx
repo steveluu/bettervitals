@@ -5,16 +5,28 @@ import MegaMenu from './MegaMenu';
 interface NavbarProps {
   onStartAssessment: () => void;
   currentPage: string;
-  setCurrentPage: (page: string) => void;
+  onNavigate: (page: string) => void;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ onStartAssessment, currentPage, setCurrentPage }) => {
+const Navbar: React.FC<NavbarProps> = ({ onStartAssessment, currentPage, onNavigate }) => {
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
 
   const navItems = [
     { name: 'Browse', slug: 'discovery', hasMenu: true },
     { name: 'Tools', slug: 'tools' }
   ];
+
+  const browseActivePaths = new Set([
+    'discovery',
+    'sleep',
+    'labs',
+    'metabolic',
+    'wearables',
+    'recovery',
+    'home-environment',
+    'supplements'
+  ]);
+  const isBrowseActive = browseActivePaths.has(currentPage) || currentPage.startsWith('product/');
 
   return (
     <header 
@@ -23,9 +35,12 @@ const Navbar: React.FC<NavbarProps> = ({ onStartAssessment, currentPage, setCurr
     >
       <div className="max-w-[1200px] mx-auto px-6 h-20 flex items-center justify-between relative">
         <div className="flex items-center gap-16">
-          <div 
+          <button 
             className="flex items-center gap-2 cursor-pointer group" 
-            onClick={() => setCurrentPage('home')}
+            onClick={() => {
+              onNavigate('home');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
           >
             <div className="text-[#0a2472] transition-transform group-hover:scale-105">
               <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
@@ -33,7 +48,7 @@ const Navbar: React.FC<NavbarProps> = ({ onStartAssessment, currentPage, setCurr
               </svg>
             </div>
             <span className="text-2xl font-black tracking-tighter text-[#1e293b] uppercase">BetterVitals</span>
-          </div>
+          </button>
           <nav className="hidden lg:flex items-center gap-10">
             {navItems.map((item) => (
               <div 
@@ -42,10 +57,14 @@ const Navbar: React.FC<NavbarProps> = ({ onStartAssessment, currentPage, setCurr
                 onMouseEnter={() => item.hasMenu && setIsMegaMenuOpen(true)}
               >
                 <button
-                  onClick={() => setCurrentPage(item.slug)}
+                  onClick={() => {
+                    onNavigate(item.slug);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
                   className={`relative text-[13px] font-bold tracking-tight transition-all pb-1 hover:text-[#359EFF] flex items-center gap-1 ${
-                    currentPage === item.slug 
-                      ? 'text-[#359EFF] after:content-[""] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-[#359EFF]' 
+                    item.slug === 'discovery' ? (isBrowseActive ? 'text-[#359EFF] after:content-[""] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-[#359EFF]' : 'text-[#64748b]') 
+                    : currentPage === item.slug
+                      ? 'text-[#359EFF] after:content-[""] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-[#359EFF]'
                       : 'text-[#64748b]'
                   }`}
                 >
@@ -74,7 +93,7 @@ const Navbar: React.FC<NavbarProps> = ({ onStartAssessment, currentPage, setCurr
         <MegaMenu 
           isOpen={isMegaMenuOpen} 
           onClose={() => setIsMegaMenuOpen(false)}
-          onNavigate={(slug) => setCurrentPage(slug)}
+          onNavigate={onNavigate}
           onStartAssessment={onStartAssessment}
         />
       </div>

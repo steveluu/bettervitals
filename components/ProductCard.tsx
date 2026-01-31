@@ -5,17 +5,11 @@ import EvidenceBadge from './EvidenceBadge';
 
 interface ProductCardProps {
   product: Product;
+  onSelect?: (slug: string) => void;
   onNavigate?: (page: string) => void;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, onNavigate }) => {
-  const handleViewReview = () => {
-    if (onNavigate) {
-      onNavigate(`product/${product.slug}`);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  };
-
+const ProductCard: React.FC<ProductCardProps> = ({ product, onSelect, onNavigate }) => {
   return (
     <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-sm overflow-hidden flex flex-col hover:border-primary transition-all group">
       <div className="h-44 bg-slate-50 dark:bg-slate-800 relative p-4 flex items-center justify-center grayscale group-hover:grayscale-0 transition-all duration-500">
@@ -54,9 +48,16 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onNavigate }) => {
         </div>
 
         {/* Primary CTA: View Full Review (internal link) */}
-        {onNavigate && product.slug ? (
+        {product.slug ? (
           <button
-            onClick={handleViewReview}
+            onClick={() => {
+              if (onSelect) {
+                onSelect(product.slug);
+              } else if (onNavigate) {
+                onNavigate(`product/${product.slug}`);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }
+            }}
             className="w-full mt-auto bg-slate-900 text-white dark:bg-slate-800 py-2 rounded-sm text-[10px] font-black uppercase tracking-widest hover:bg-primary hover:text-scientific-blue transition-all text-center"
           >
             View Full Review
