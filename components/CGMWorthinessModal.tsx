@@ -135,11 +135,11 @@ const CGMWorthinessModal: React.FC<CGMWorthinessModalProps> = ({ isOpen, onClose
             </div>
             <div className="space-y-3">
               {[
-                { value: 'metabolic-health', label: 'Optimize Metabolic Health', desc: 'Improve insulin sensitivity, prevent disease' },
-                { value: 'weight-loss', label: 'Weight Management', desc: 'Use glucose data to guide eating patterns' },
-                { value: 'athletic-performance', label: 'Athletic Performance', desc: 'Fuel workouts and optimize recovery' },
-                { value: 'general-wellness', label: 'General Wellness', desc: 'Better understand my body' },
-                { value: 'curiosity', label: 'Just Curious', desc: 'Want to experiment with the technology' },
+                { value: 'metabolic-health', label: 'Optimize Metabolic Health', desc: 'Keep blood sugar stable, avoid diabetes' },
+                { value: 'weight-loss', label: 'Weight Management', desc: 'See which foods spike you, lose weight' },
+                { value: 'athletic-performance', label: 'Athletic Performance', desc: 'Know what to eat before and after training' },
+                { value: 'general-wellness', label: 'General Wellness', desc: 'See how food actually affects me' },
+                { value: 'curiosity', label: 'Just Curious', desc: 'Curious what all the hype is about' },
               ].map(opt => (
                 <button
                   key={opt.value}
@@ -269,15 +269,15 @@ const CGMWorthinessModal: React.FC<CGMWorthinessModalProps> = ({ isOpen, onClose
           <div className="space-y-6">
             <div>
               <span className="text-[10px] font-black uppercase tracking-widest text-primary mb-2 block">Step 4 of 7</span>
-              <h2 className="serif-heading text-3xl font-bold text-scientific-blue">Data Engagement Style</h2>
+              <h2 className="serif-heading text-3xl font-bold text-scientific-blue">How Do You Like Your Data?</h2>
               <p className="text-slate-500 text-sm mt-2">How do you prefer to interact with health data?</p>
             </div>
             <div className="space-y-3">
               {[
-                { value: 'deep-diver', label: 'Deep Diver', desc: 'I want all the raw data and charts' },
-                { value: 'self-directed', label: 'Self-Directed', desc: 'Give me insights, I\'ll figure out the rest' },
-                { value: 'guided', label: 'Guided Coaching', desc: 'I want expert interpretation and advice' },
-                { value: 'simple-insights', label: 'Simple Insights', desc: 'Just tell me what to do' },
+                { value: 'deep-diver', label: 'Deep Diver', desc: 'Show me the graphs, I\'ll analyze it myself' },
+                { value: 'self-directed', label: 'Self-Directed', desc: 'Point me in the right direction' },
+                { value: 'guided', label: 'Guided Coaching', desc: 'Tell me what it means and what to do' },
+                { value: 'simple-insights', label: 'Simple Insights', desc: 'Skip the details, just give me the answer' },
               ].map(opt => (
                 <button
                   key={opt.value}
@@ -319,11 +319,11 @@ const CGMWorthinessModal: React.FC<CGMWorthinessModalProps> = ({ isOpen, onClose
             </div>
             <div className="space-y-3">
               {[
-                { value: 'very-comfortable', label: 'Very Comfortable', desc: 'I already wear sensors or have no concerns' },
-                { value: 'comfortable', label: 'Comfortable', desc: 'Seems manageable, willing to try' },
-                { value: 'neutral', label: 'Neutral', desc: 'Not sure, but open to it' },
-                { value: 'hesitant', label: 'Hesitant', desc: 'A bit worried about comfort/visibility' },
-                { value: 'uncomfortable', label: 'Prefer Non-Invasive', desc: 'Would rather avoid wearing a sensor' },
+                { value: 'very-comfortable', label: 'Very Comfortable', desc: 'Already wear one, or doesn\'t bother me' },
+                { value: 'comfortable', label: 'Comfortable', desc: 'Probably fine, I\'ll give it a shot' },
+                { value: 'neutral', label: 'Neutral', desc: 'On the fence' },
+                { value: 'hesitant', label: 'Hesitant', desc: 'Kinda nervous about it showing or hurting' },
+                { value: 'uncomfortable', label: 'Prefer Non-Invasive', desc: 'I\'d rather not stick something on my arm' },
               ].map(opt => (
                 <button
                   key={opt.value}
@@ -410,11 +410,11 @@ const CGMWorthinessModal: React.FC<CGMWorthinessModalProps> = ({ isOpen, onClose
             </div>
             <div className="space-y-3">
               {[
-                { value: 'long-term', label: 'Long-term (6+ months)', desc: 'Building lasting habits' },
-                { value: '3-6-months', label: '3-6 months', desc: 'Serious exploration phase' },
-                { value: '1-3-months', label: '1-3 months', desc: 'Testing the waters' },
-                { value: 'trial-only', label: 'Just a trial', desc: 'Single month to see if it works' },
-                { value: 'undecided', label: 'Undecided', desc: 'Not sure yet' },
+                { value: 'long-term', label: 'Long-term (6+ months)', desc: 'In it for the long haul' },
+                { value: '3-6-months', label: '3-6 months', desc: 'Want to really learn my patterns' },
+                { value: '1-3-months', label: '1-3 months', desc: 'Dipping my toes in' },
+                { value: 'trial-only', label: 'Just a trial', desc: 'One month, see what happens' },
+                { value: 'undecided', label: 'Undecided', desc: 'Haven\'t decided' },
               ].map(opt => (
                 <button
                   key={opt.value}
