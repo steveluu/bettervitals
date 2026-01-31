@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { FEATURED_TOOLS, VERIFIED_SELECTIONS } from '../constants';
+import { FEATURED_TOOLS } from '../constants';
 import ToolCard from '../components/ToolCard';
 
 interface DiscoveryProps {

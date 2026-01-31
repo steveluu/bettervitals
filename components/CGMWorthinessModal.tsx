@@ -8,7 +8,6 @@ import {
   generateCGMAssessment,
   CGMAIResult
 } from '../services/cgmAssessmentService';
-import ProductCard from './ProductCard';
 import AffiliateDisclosure from './AffiliateDisclosure';
 
 interface CGMWorthinessModalProps {
@@ -102,6 +101,7 @@ const CGMWorthinessModal: React.FC<CGMWorthinessModalProps> = ({ isOpen, onClose
   const handleProductClick = (slug: string) => {
     onClose();
     onNavigate(`product/${slug}`);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const getLabelColor = (label: string): string => {

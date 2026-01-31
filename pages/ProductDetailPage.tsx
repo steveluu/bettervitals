@@ -1,12 +1,11 @@
 import React from 'react';
-import { Product } from '../types';
 import { VERIFIED_SELECTIONS } from '../constants';
 import EvidenceBadge from '../components/EvidenceBadge';
 import AffiliateDisclosure from '../components/AffiliateDisclosure';
 import ResearchSection from '../components/ResearchSection';
 
 interface ProductDetailPageProps {
-  product: Product;
+  slug: string;
   onNavigate: (page: string) => void;
 }
 
@@ -24,7 +23,29 @@ const getCategorySlug = (category: string): string => {
   return slugMap[category] || 'discovery';
 };
 
-const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product, onNavigate }) => {
+const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ slug, onNavigate }) => {
+  const product = VERIFIED_SELECTIONS.find((item) => item.slug === slug);
+
+  if (!product) {
+    return (
+      <div className="max-w-4xl mx-auto">
+        <div className="bg-slate-50 border border-slate-200 rounded-lg p-8 text-center">
+          <h1 className="text-2xl font-black text-slate-800 mb-2">Product not found</h1>
+          <p className="text-slate-500 mb-6">The product you’re looking for isn’t available yet.</p>
+          <button
+            onClick={() => {
+              onNavigate('discovery');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            className="inline-flex items-center gap-2 bg-slate-900 text-white px-6 py-3 rounded-sm text-sm font-black uppercase tracking-widest hover:bg-primary hover:text-scientific-blue transition-all"
+          >
+            Browse Discovery
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   const categorySlug = getCategorySlug(product.category);
 
   // Get related products (same category, excluding current product)
@@ -32,24 +53,25 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product, onNaviga
     .filter(p => p.category === product.category && p.id !== product.id)
     .slice(0, 3);
 
-  const handleNavigate = (page: string) => {
-    onNavigate(page);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   return (
     <div className="max-w-4xl mx-auto">
       {/* Breadcrumb */}
       <nav className="flex items-center gap-2 text-xs text-slate-400 mb-8">
         <button
-          onClick={() => handleNavigate('discovery')}
+          onClick={() => {
+            onNavigate('discovery');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
           className="hover:text-primary transition-colors"
         >
           Discovery
         </button>
         <span className="material-symbols-outlined text-[14px]">chevron_right</span>
         <button
-          onClick={() => handleNavigate(categorySlug)}
+          onClick={() => {
+            onNavigate(categorySlug);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
           className="hover:text-primary transition-colors"
         >
           {product.category}
@@ -211,7 +233,10 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product, onNaviga
             {relatedProducts.map((relatedProduct) => (
               <button
                 key={relatedProduct.id}
-                onClick={() => handleNavigate(`product/${relatedProduct.slug}`)}
+                onClick={() => {
+                  onNavigate(`product/${relatedProduct.slug}`);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
                 className="bg-white border border-slate-200 rounded-lg p-4 text-left hover:border-primary transition-all group"
               >
                 <div className="flex items-center gap-3 mb-2">
@@ -238,7 +263,10 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product, onNaviga
       {/* Back to Category */}
       <div className="text-center mb-8">
         <button
-          onClick={() => handleNavigate(categorySlug)}
+          onClick={() => {
+            onNavigate(categorySlug);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
           className="text-sm text-slate-500 hover:text-primary transition-colors inline-flex items-center gap-1"
         >
           <span className="material-symbols-outlined text-lg">arrow_back</span>

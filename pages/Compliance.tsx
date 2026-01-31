@@ -1,7 +1,11 @@
 
 import React from 'react';
 
-const Compliance: React.FC = () => {
+interface ComplianceProps {
+  onNavigate: (page: string) => void;
+}
+
+const Compliance: React.FC<ComplianceProps> = ({ onNavigate }) => {
   return (
     <div className="animate-in fade-in duration-500 max-w-4xl mx-auto">
       <div className="text-center mb-16">
@@ -115,9 +119,25 @@ const Compliance: React.FC = () => {
         <section className="border-t border-slate-200 pt-8">
           <h2 className="serif-heading text-xl font-bold text-scientific-blue mb-4">Related Policies</h2>
           <div className="flex flex-wrap gap-4">
-            <a href="#" className="text-primary hover:underline font-medium">Privacy Policy</a>
+            <button
+              onClick={() => {
+                onNavigate('privacy');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className="text-primary hover:underline font-medium"
+            >
+              Privacy Policy
+            </button>
             <span className="text-slate-300">|</span>
-            <a href="#" className="text-primary hover:underline font-medium">Terms of Service</a>
+            <button
+              onClick={() => {
+                onNavigate('terms');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className="text-primary hover:underline font-medium"
+            >
+              Terms of Service
+            </button>
           </div>
         </section>
       </div>

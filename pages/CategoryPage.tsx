@@ -119,7 +119,10 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ category, description, onOp
         <ol className="flex items-center gap-2 text-sm">
           <li>
             <button
-              onClick={() => onNavigate('discovery')}
+              onClick={() => {
+                onNavigate('discovery');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
               className="text-slate-400 hover:text-primary transition-colors font-medium"
             >
               Discovery
@@ -248,7 +251,10 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ category, description, onOp
               Take General Assessment
             </button>
             <button
-              onClick={() => onNavigate('discovery')}
+              onClick={() => {
+                onNavigate('discovery');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
               className="bg-white border border-slate-200 text-slate-600 px-6 py-3 rounded-lg font-black text-xs uppercase tracking-widest hover:bg-slate-50 transition-all"
             >
               Browse Other Categories

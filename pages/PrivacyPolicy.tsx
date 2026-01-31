@@ -1,7 +1,11 @@
 
 import React from 'react';
 
-const PrivacyPolicy: React.FC = () => {
+interface PrivacyPolicyProps {
+  onNavigate: (page: string) => void;
+}
+
+const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onNavigate }) => {
   return (
     <div className="animate-in fade-in duration-500 max-w-4xl mx-auto">
       <div className="text-center mb-16">
@@ -59,7 +63,15 @@ const PrivacyPolicy: React.FC = () => {
             <li>Our editorial recommendations remain independent of affiliate relationships</li>
           </ul>
           <p className="text-slate-600 leading-relaxed mt-4">
-            For more information about our affiliate relationships, please see our <a href="#" className="text-primary hover:underline">Compliance page</a>.
+            For more information about our affiliate relationships, please see our <button
+              onClick={() => {
+                onNavigate('compliance');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className="text-primary hover:underline"
+            >
+              Compliance page
+            </button>.
           </p>
         </section>
 

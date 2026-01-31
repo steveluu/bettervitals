@@ -1,7 +1,11 @@
 
 import React from 'react';
 
-const TermsOfService: React.FC = () => {
+interface TermsOfServiceProps {
+  onNavigate: (page: string) => void;
+}
+
+const TermsOfService: React.FC<TermsOfServiceProps> = ({ onNavigate }) => {
   return (
     <div className="animate-in fade-in duration-500 max-w-4xl mx-auto">
       <div className="text-center mb-16">
@@ -72,7 +76,15 @@ const TermsOfService: React.FC = () => {
             <li>We only recommend products we believe provide genuine value</li>
           </ul>
           <p className="text-slate-600 leading-relaxed mt-4">
-            For complete details, please review our <a href="#" className="text-primary hover:underline">Compliance page</a>.
+            For complete details, please review our <button
+              onClick={() => {
+                onNavigate('compliance');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className="text-primary hover:underline"
+            >
+              Compliance page
+            </button>.
           </p>
         </section>
 

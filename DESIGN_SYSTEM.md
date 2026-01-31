@@ -397,4 +397,4 @@ npm run preview  # Preview production build
 
 | Variable | Purpose |
 |----------|---------|
-| `API_KEY` | Google GenAI API key (defined in `.env.local`)
+| `GEMINI_API_KEY` | Google GenAI API key for the server API (defined in `.env.local`)

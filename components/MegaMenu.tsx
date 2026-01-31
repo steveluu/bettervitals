@@ -55,7 +55,11 @@ const MegaMenu: React.FC<MegaMenuProps> = ({ isOpen, onClose, onNavigate, onStar
             {categories.map((cat) => (
               <button
                 key={cat.name}
-                onClick={() => { onNavigate(cat.slug); onClose(); }}
+                onClick={() => {
+                  onNavigate(cat.slug);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                  onClose();
+                }}
                 className="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-50 transition-colors group text-left"
               >
                 <span className="material-symbols-outlined text-slate-300 group-hover:text-[#359EFF] text-xl transition-colors">{cat.icon}</span>
@@ -72,7 +76,11 @@ const MegaMenu: React.FC<MegaMenuProps> = ({ isOpen, onClose, onNavigate, onStar
             {goals.map((goal) => (
               <button
                 key={goal}
-                onClick={() => { onNavigate('discovery'); onClose(); }}
+                onClick={() => {
+                  onNavigate('discovery');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                  onClose();
+                }}
                 className="w-full text-left p-4 rounded-xl bg-[#f8fafc] border border-transparent hover:border-[#359EFF]/30 hover:bg-white hover:shadow-sm transition-all group"
               >
                 <span className="text-[13px] font-bold text-[#1e293b] flex items-center justify-between">
@@ -108,7 +116,11 @@ const MegaMenu: React.FC<MegaMenuProps> = ({ isOpen, onClose, onNavigate, onStar
               {popular.map((item) => (
                 <button 
                   key={item.name}
-                  onClick={() => { onNavigate('discovery'); onClose(); }}
+                  onClick={() => {
+                    onNavigate('discovery');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    onClose();
+                  }}
                   className="w-full text-left group"
                 >
                   <p className="text-[13px] font-bold text-[#1e293b] group-hover:text-[#359EFF] transition-colors">{item.name}</p>
@@ -125,7 +137,11 @@ const MegaMenu: React.FC<MegaMenuProps> = ({ isOpen, onClose, onNavigate, onStar
               {guides.map((guide) => (
                 <button 
                   key={guide}
-                  onClick={() => { onNavigate('discovery'); onClose(); }}
+                  onClick={() => {
+                    onNavigate('discovery');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    onClose();
+                  }}
                   className="block text-[13px] font-bold text-slate-600 hover:text-[#359EFF] transition-colors"
                 >
                   {guide}

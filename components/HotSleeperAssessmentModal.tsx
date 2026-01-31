@@ -148,6 +148,7 @@ const HotSleeperAssessmentModal: React.FC<HotSleeperAssessmentModalProps> = ({ i
   const handleProductClick = (slug: string) => {
     onClose();
     onNavigate(`product/${slug}`);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const getSeverityColor = (severity: string): string => {
@@ -373,9 +374,7 @@ const HotSleeperAssessmentModal: React.FC<HotSleeperAssessmentModalProps> = ({ i
                 <h3 className="font-black text-xs uppercase tracking-widest text-primary">Recommended Cooling Gear</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {result.productRecommendations.map(product => (
-                    <div key={product.id} onClick={() => handleProductClick(product.slug)} className="cursor-pointer">
-                      <ProductCard product={product} onNavigate={onNavigate} />
-                    </div>
+                    <ProductCard key={product.id} product={product} onSelect={handleProductClick} />
                   ))}
                 </div>
                 <AffiliateDisclosure />
