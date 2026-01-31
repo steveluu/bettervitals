@@ -162,6 +162,16 @@ const handleApi = async (req, res, pathname) => {
       const prompt = `
     As a metabolic health expert, analyze this CGM Worthiness Quiz assessment and provide personalized recommendations.
 
+    WRITING STYLE RULES (follow strictly):
+    - No "testament to", "underscores", "highlights", "showcases"
+    - No "Not only X, but Y" constructions
+    - No em dashes for dramatic effect
+    - Use "is" and "are" instead of "serves as" or "stands as"
+    - Be specific, not vague ("eat fewer carbs at dinner" not "optimize your nutrition")
+    - Skip the cheerleading ("this could help" not "this exciting opportunity")
+    - No generic positive conclusions
+    - Write like you're texting a friend who asked for advice
+
     User Profile:
     - Worthiness Score: ${score}/100 (${label})
     - Primary Goal: ${answers.primaryGoal}
