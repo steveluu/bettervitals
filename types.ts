@@ -103,15 +103,6 @@ export interface HotSleeperAnswers {
   budget: string;
 }
 
-export interface HotSleeperAssessmentResult {
-  score: number;
-  severity: 'mild' | 'moderate' | 'severe' | 'extreme';
-  label: string;
-  summary: string;
-  actionPlan: { title: string; description: string; icon: string; }[];
-  productRecommendations: Product[];
-}
-
 export interface CGMQuizAnswers {
   primaryGoal: string;
   riskFactors: string[];
@@ -120,17 +111,4 @@ export interface CGMQuizAnswers {
   wearableComfort: string;
   budget: string;
   timeline: string;
-}
-
-export interface CGMAssessmentResult {
-  worthinessScore: number;
-  worthinessLabel: 'CGM READY' | 'GOOD CANDIDATE' | 'OPTIONAL' | 'ALTERNATIVE PATH';
-  verdict: string;
-  primaryRecommendation: {
-    productId: string;
-    matchScore: number;
-    whyItFits: string[];
-  };
-  alternatives: { productId: string; matchScore: number; bestFor: string; }[];
-  actionPlan: { title: string; description: string; icon: string; }[];
 }

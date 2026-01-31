@@ -1,15 +1,5 @@
-import { CGMQuizAnswers, CGMAssessmentResult, Product } from '../types';
+import { CGMQuizAnswers, Product } from '../types';
 import { VERIFIED_SELECTIONS } from '../constants';
-
-// CGM Products from constants.tsx for matching
-const CGM_PRODUCTS = [
-  'levels-health',
-  'nutrisense',
-  'dexcom-stelo',
-  'signos',
-  'abbott-lingo',
-  'lumen'
-];
 
 export const calculateWorthinessScore = (answers: CGMQuizAnswers): number => {
   let score = 40; // Base score
